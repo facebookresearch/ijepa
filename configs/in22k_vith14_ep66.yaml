@@ -1,0 +1,56 @@
+# NOTE: ImageNet-22K (IN22k) dataloader is not implemented
+# please implement IN22k data loader based on your data
+# storage format, and update the paths in your config
+# to load from your IN22k dataset.
+data:
+  batch_size: 32
+  color_jitter_strength: 0.0
+  crop_scale:
+  - 0.3
+  - 1.0
+  crop_size: 224
+  image_folder: imagenet_full_size/061417/
+  num_workers: 10
+  pin_mem: true
+  root_path: $replace_this_with_absolute_path_to_your_datasets_directory
+  use_color_distortion: false
+  use_gaussian_blur: false
+  use_horizontal_flip: false
+logging:
+  folder: $replace_this_with_path_for_experiment_logs/in2kk_vith14.224-bs.2048-ep.66/
+  write_tag: jepa
+mask:
+  allow_overlap: false
+  aspect_ratio:
+  - 0.75
+  - 1.5
+  enc_mask_scale:
+  - 0.85
+  - 1.0
+  min_keep: 10
+  num_enc_masks: 1
+  num_pred_masks: 4
+  patch_size: 14
+  pred_mask_scale:
+  - 0.15
+  - 0.2
+meta:
+  copy_data: false
+  load_checkpoint: false
+  model_name: vit_huge
+  pred_depth: 12
+  pred_emb_dim: 384
+  read_checkpoint: null
+  use_bfloat16: true
+optimization:
+  ema:
+  - 0.996
+  - 1.0
+  epochs: 66
+  final_lr: 1.0e-06
+  final_weight_decay: 0.4
+  ipe_scale: 1.0
+  lr: 0.001
+  start_lr: 0.0002
+  warmup: 3
+  weight_decay: 0.04
