@@ -141,7 +141,7 @@ python main_distributed.py \
 * Other dependencies: pyyaml, numpy, opencv, submitit
 
 ## License
-See the [LICENSE](./LICENSE) file for details about the license under which this code is made available.
+This code is source-available, not open source. Non-commercial use only. See the [LICENSE](./LICENSE) file for details about the license under which this code is made available.
 
 ## Citation
 If you find this repository useful in your research, please consider giving a star :star: and a citation
