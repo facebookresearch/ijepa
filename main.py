@@ -9,6 +9,8 @@ import argparse
 
 import multiprocessing as mp
 
+import logging
+
 import pprint
 import yaml
 
@@ -29,9 +31,15 @@ def process_main(rank, fname, world_size, devices):
     import os
     os.environ['CUDA_VISIBLE_DEVICES'] = str(devices[rank].split(':')[-1])
 
-    import logging
     logging.basicConfig()
     logger = logging.getLogger()
+
+    # Add a log handler (e.g., StreamHandler or FileHandler)
+    log_handler = logging.StreamHandler()  # Output log messages to console
+    # log_handler = logging.FileHandler('logfile.txt')  # Output log messages to a file
+
+    logger.addHandler(log_handler)
+
     if rank == 0:
         logger.setLevel(logging.INFO)
     else:
@@ -42,7 +50,7 @@ def process_main(rank, fname, world_size, devices):
     # -- load script params
     params = None
     with open(fname, 'r') as y_file:
-        params = yaml.load(y_file, Loader=yaml.FullLoader)
+        params = yaml.safe_load(y_file)
         logger.info('loaded params...')
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(params)
