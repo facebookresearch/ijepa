@@ -5,7 +5,7 @@ data:
   - 0.3
   - 1.0
   crop_size: 448
-  image_folder: imagenet_full_size/061417/
+  image_folder: wenmanet_full_size/061417/
   num_workers: 10
   pin_mem: true
   root_path: $replace_this_with_absolute_path_to_your_datasets_directory

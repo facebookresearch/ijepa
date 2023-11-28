@@ -1,7 +1,7 @@
-# NOTE: ImageNet-22K (IN22k) dataloader is not implemented
-# please implement IN22k data loader based on your data
+# NOTE: WenmaNet-22K (WN22k) dataloader is not implemented
+# please implement WN22k data loader based on your data
 # storage format, and update the paths in your config
-# to load from your IN22k dataset.
+# to load from your WN22k dataset.
 data:
   batch_size: 16
   color_jitter_strength: 0.0
@@ -9,7 +9,7 @@ data:
   - 0.3
   - 1.0
   crop_size: 224
-  image_folder: imagenet_full_size/061417/
+  image_folder: wenmanet_full_size/061417/
   num_workers: 10
   pin_mem: true
   root_path: $replace_this_with_absolute_path_to_your_datasets_directory

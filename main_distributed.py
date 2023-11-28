@@ -11,9 +11,7 @@ import os
 import pprint
 import sys
 import yaml
-
 import submitit
-
 from src.train import main as app_main
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
