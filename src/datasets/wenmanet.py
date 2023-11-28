@@ -20,7 +20,7 @@ _GLOBAL_SEED = 0
 logger = getLogger()
 
 
-def make_imagenet1k(
+def make_wenmanet(
     transform,
     batch_size,
     collator=None,
@@ -35,7 +35,7 @@ def make_imagenet1k(
     drop_last=True,
     subset_file=None
 ):
-    dataset = ImageNet(
+    dataset = WenmaNet(
         root=root_path,
         image_folder=image_folder,
         transform=transform,
@@ -43,8 +43,8 @@ def make_imagenet1k(
         copy_data=copy_data,
         index_targets=False)
     if subset_file is not None:
-        dataset = ImageNetSubset(dataset, subset_file)
-    logger.info('ImageNet dataset created')
+        dataset = WenmaNetSubset(dataset, subset_file)
+    logger.info('Dataset created')
     dist_sampler = torch.utils.data.distributed.DistributedSampler(
         dataset=dataset,
         num_replicas=world_size,
@@ -58,18 +58,18 @@ def make_imagenet1k(
         pin_memory=pin_mem,
         num_workers=num_workers,
         persistent_workers=False)
-    logger.info('ImageNet unsupervised data loader created')
+    logger.info('Unsupervised data loader created')
 
     return dataset, data_loader, dist_sampler
 
 
-class ImageNet(torchvision.datasets.ImageFolder):
+class WenmaNet(torchvision.datasets.ImageFolder):
 
     def __init__(
         self,
         root,
-        image_folder='imagenet_full_size/061417/',
-        tar_file='imagenet_full_size-061417.tar.gz',
+        image_folder='wenmanet_full_size/061417/',
+        tar_file='wenmanet_full_size-061417.tar.gz',
         transform=None,
         train=True,
         job_id=None,
@@ -78,11 +78,11 @@ class ImageNet(torchvision.datasets.ImageFolder):
         index_targets=False
     ):
         """
-        ImageNet
+        Wenmanet
 
         Dataset wrapper (can copy data locally to machine)
 
-        :param root: root network directory for ImageNet data
+        :param root: root network directory for Wenmanet data
         :param image_folder: path to images inside root network directory
         :param tar_file: zipped image_folder inside root network directory
         :param train: whether to load train data (or validation)
@@ -106,8 +106,8 @@ class ImageNet(torchvision.datasets.ImageFolder):
             data_path = os.path.join(root, image_folder, suffix)
         logger.info(f'data-path {data_path}')
 
-        super(ImageNet, self).__init__(root=data_path, transform=transform)
-        logger.info('Initialized ImageNet')
+        super(WenmaNet, self).__init__(root=data_path, transform=transform)
+        logger.info('Initialized Wenmanet')
 
         if index_targets:
             self.targets = []
@@ -127,13 +127,13 @@ class ImageNet(torchvision.datasets.ImageFolder):
             logger.info(f'min. labeled indices {mint}')
 
 
-class ImageNetSubset(object):
+class WenmaNetSubset(object):
 
     def __init__(self, dataset, subset_file):
         """
-        ImageNetSubset
+        WenmaNet Subset
 
-        :param dataset: ImageNet dataset object
+        :param dataset: WenmaNet dataset object
         :param subset_file: '.txt' file containing IDs of IN1K images to keep
         """
         self.dataset = dataset
@@ -177,8 +177,8 @@ class ImageNetSubset(object):
 def copy_imgnt_locally(
     root,
     suffix,
-    image_folder='imagenet_full_size/061417/',
-    tar_file='imagenet_full_size-061417.tar.gz',
+    image_folder='wenmanet_full_size/061417/',
+    tar_file='wenmanet_full_size-061417.tar.gz',
     job_id=None,
     local_rank=None
 ):

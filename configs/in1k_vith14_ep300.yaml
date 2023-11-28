@@ -4,16 +4,16 @@ data:
   crop_scale:
   - 0.3
   - 1.0
-  crop_size: 224
-  image_folder: imagenet_full_size/061417/
-  num_workers: 10
+  crop_size: 32
+  image_folder: data
+  num_workers: 4
   pin_mem: true
-  root_path: $replace_this_with_absolute_path_to_your_datasets_directory
+  root_path: ./
   use_color_distortion: false
   use_gaussian_blur: false
   use_horizontal_flip: false
 logging:
-  folder: $replace_this_with_path_for_experiment_logs/vith14.224-bs.2048-ep.300/
+  folder: experiments
   write_tag: jepa
 mask:
   allow_overlap: false
@@ -33,11 +33,11 @@ mask:
 meta:
   copy_data: false
   load_checkpoint: false
-  model_name: vit_huge
+  model_name: vit_small
   pred_depth: 12
   pred_emb_dim: 384
   read_checkpoint: null
-  use_bfloat16: true
+  use_bfloat16: false
 optimization:
   ema:
   - 0.996
